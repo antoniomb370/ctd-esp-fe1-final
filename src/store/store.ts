@@ -1,14 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch,useSelector } from "react-redux";
-import characterRedecer from "./slices/character/charecterSlice";
+import characterRedecer from "./slices/character/characterSlice";
 
 
  const store = configureStore({
   reducer: {
 character: characterRedecer
-
   }
-  
 });
 
  type RootState = ReturnType<typeof store.getState>;
