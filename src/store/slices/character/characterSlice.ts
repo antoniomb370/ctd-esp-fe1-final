@@ -1,26 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { GET_CHARACTERS } from "./thunks";
+import { ICharacter,ICharacterState } from "./interfaceChararter";
 
-export interface Character {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  image: string;
-  episode: string[];
-  created: Date;
-}
 
-export interface CharacterState {
-  characters: Character[];
-  filteredCharacters: Character[]
-  isLoading: boolean;
-  isError: string | null;
-}
 
-const initialState: CharacterState = {
+const initialState: ICharacterState = {
   characters: [],
   filteredCharacters: [],
   isLoading: true,
@@ -33,13 +17,10 @@ export const characterSlice = createSlice({
   reducers: {
     FILTER_CHARACTERS: (state, action: PayloadAction<string>) => {
       const searchTerm = action.payload.toLowerCase();
-      // Filtrar los personajes según el término de búsqueda
       state.filteredCharacters = state.characters.filter((character) =>
         character.name.toLowerCase().includes(searchTerm)
       );
     },
-
-
   },
   extraReducers: (builder) => {
     builder.addCase(GET_CHARACTERS.pending, (state) => {
@@ -48,7 +29,7 @@ export const characterSlice = createSlice({
 
     builder.addCase(
       GET_CHARACTERS.fulfilled,
-      (state, action: PayloadAction<Character[]>) => {
+      (state, action: PayloadAction<ICharacter[]>) => {
         state.characters = action.payload;
         state.isLoading = false;
       }

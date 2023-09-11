@@ -1,12 +1,11 @@
 import './grilla-personajes.css';
 import './tarjeta-personaje.css';
-import { Character } from '../../store/slices/character/characterSlice';
 import { useAppSelector } from '../../store/store';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import TarjetaPersonaje from './tarjeta-personaje.componente';
 import { FILTER_CHARACTERS } from '../../store/slices/character/characterSlice';
-
+import {  IGrillaPersonajesProps} from './interfaceGrillaPersonaje';
 
 /**
  * Grilla de personajes para la pagina de inicio
@@ -16,17 +15,9 @@ import { FILTER_CHARACTERS } from '../../store/slices/character/characterSlice';
  * 
  * @returns un JSX element 
  */
-export interface ITarjetaPersonaje {
-    nombre: string;
-    UrlImagen: string;
-    esFavorito: boolean;
-}
 
-export interface GrillaPersonajesProps {
-    initialCharacters: Character[];
-}
 
-const GrillaPersonajes = ({ initialCharacters }: GrillaPersonajesProps) => {
+const GrillaPersonajes = ({ initialCharacters }: IGrillaPersonajesProps ) => {
     const { isLoading, isError, filteredCharacters } = useAppSelector(state => state.character);
     const [searchTerm, setSearchTerm] = useState("");
     const dispatch = useDispatch();
@@ -42,7 +33,7 @@ const GrillaPersonajes = ({ initialCharacters }: GrillaPersonajesProps) => {
     }, [searchTerm, dispatch]);
 
 
-    const charactersToDisplay =  searchTerm.trim() ==="" 
+  const charactersToDisplay =  searchTerm.trim() ===" " 
     ? filteredCharacters 
     : initialCharacters 
 

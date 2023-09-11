@@ -1,6 +1,6 @@
 import BotonFavorito from '../botones/boton-favorito.componente';
 import './tarjeta-personaje.css';
-import { ITarjetaPersonaje } from './grilla-personajes.componente';
+import { ITarjetaPersonaje } from './interfaceGrillaPersonaje';
 
 /**
  * Tarjeta para cada personaje dentro de la grilla de personajes. 

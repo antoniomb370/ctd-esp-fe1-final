@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../store/store";
  *
  * @returns la pagina de inicio
  */
-const PaginaInicio = () => {
+const PaginaInicio = ({}) => {
   const dispacth = useAppDispatch();
   const { valor: valorPagina } = useAppSelector((state) => state.page)
   const { characters} = useAppSelector((state) => state.character)
@@ -28,10 +28,10 @@ const PaginaInicio = () => {
         <h3>Catálogo de Personajes</h3>
         <button className="danger"> Limpiar Filtros</button>
       </div>
-      <Filtros  />
+      <Filtros   />
       <Paginacion valorPagina={valorPagina} />
       <GrillaPersonajes initialCharacters={characters} />
-      <Paginacion />
+      <Paginacion valorPagina={valorPagina}/>
     </div>
   );
 };
