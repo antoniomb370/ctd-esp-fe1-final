@@ -2,8 +2,8 @@ import Filtros from "../componentes/personajes/filtros.componente";
 import GrillaPersonajes from "../componentes/personajes/grilla-personajes.componente";
 import Paginacion from "../componentes/paginacion/paginacion.componente";
 import { GET_CHARACTERS } from "../store/slices/character/thunks";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../store/store";
 /**
  * Esta es la pagina principal. Aquí se debera ver el panel de filtros junto con la grilla de personajes.
  *
@@ -13,12 +13,14 @@ import { useEffect } from "react";
  * @returns la pagina de inicio
  */
 const PaginaInicio = () => {
-  const dispacth = useDispatch();
-const {characters} = useSelector(state => state.character)
+  const dispacth = useAppDispatch();
+  const { valor: valorPagina } = useAppSelector((state) => state.page)
+  const { characters} = useAppSelector((state) => state.character)
 
-    useEffect(() => {
-    dispacth(GET_CHARACTERS({data: {page: 1}}));
-    }, []);
+  // este punto esta bien 
+  useEffect(() => {
+    dispacth(GET_CHARACTERS({numeroPagina: valorPagina,parametro:'page'}));
+  }, [valorPagina]);
 
   return (
     <div className="container">
@@ -26,8 +28,8 @@ const {characters} = useSelector(state => state.character)
         <h3>Catálogo de Personajes</h3>
         <button className="danger"> Limpiar Filtros</button>
       </div>
-      <Filtros />
-      <Paginacion />
+      <Filtros  />
+      <Paginacion valorPagina={valorPagina} />
       <GrillaPersonajes initialCharacters={characters} />
       <Paginacion />
     </div>

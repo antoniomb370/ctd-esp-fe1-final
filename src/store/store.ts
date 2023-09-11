@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch,useSelector } from "react-redux";
 import characterRedecer from "./slices/character/characterSlice";
+import paginacionRedecer from "./slices/paginacion/paginacionSlice";
 
 
  const store = configureStore({
   reducer: {
-character: characterRedecer
+character: characterRedecer,
+page: paginacionRedecer,
   }
 });
 

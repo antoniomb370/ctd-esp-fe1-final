@@ -14,15 +14,15 @@ export interface Character {
 }
 
 export interface CharacterState {
-  page: number;
   characters: Character[];
+  filteredCharacters: Character[]
   isLoading: boolean;
   isError: string | null;
 }
 
 const initialState: CharacterState = {
-  page: 0,
   characters: [],
+  filteredCharacters: [],
   isLoading: true,
   isError: null,
 };
@@ -31,12 +31,15 @@ export const characterSlice = createSlice({
   name: "character",
   initialState: initialState,
   reducers: {
-    /* START_LOADING_CHARACTER: (state) => {
-      state.isLoading = true;
+    FILTER_CHARACTERS: (state, action: PayloadAction<string>) => {
+      const searchTerm = action.payload.toLowerCase();
+      // Filtrar los personajes según el término de búsqueda
+      state.filteredCharacters = state.characters.filter((character) =>
+        character.name.toLowerCase().includes(searchTerm)
+      );
     },
-    SET_CHARACTER: (state, action: PayloadAction<any>) => {
-      console.log(action.payload);
-    } */
+
+
   },
   extraReducers: (builder) => {
     builder.addCase(GET_CHARACTERS.pending, (state) => {
@@ -56,9 +59,10 @@ export const characterSlice = createSlice({
       state.isError = action.error.message ??  'Hay un error';
     });
   },
+
 });
 
+export const { FILTER_CHARACTERS } = characterSlice.actions;
 const characterRedecer = characterSlice.reducer;
 
-/* export const {START_LOADING_CHARACTER, SET_CHARACTER} = characterSlice.actions; */
 export default characterRedecer;
