@@ -8,4 +8,5 @@ export interface ITarjetaPersonaje {
 
 export interface  IGrillaPersonajesProps {
     initialCharacters: ICharacter[];
+
 }

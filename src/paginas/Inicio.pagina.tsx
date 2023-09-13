@@ -1,9 +1,11 @@
 import Filtros from "../componentes/personajes/filtros.componente";
 import GrillaPersonajes from "../componentes/personajes/grilla-personajes.componente";
 import Paginacion from "../componentes/paginacion/paginacion.componente";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { GET_CHARACTERS } from "../store/slices/character/thunks";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { FILTER_CHARACTERS } from "../store/slices/character/characterSlice";
+import { NEXT_PAGE, PREVIOUS_PAGE } from "../store/slices/paginacion/paginacionSlice";
 /**
  * Esta es la pagina principal. Aquí se debera ver el panel de filtros junto con la grilla de personajes.
  *
@@ -12,14 +14,23 @@ import { useAppDispatch, useAppSelector } from "../store/store";
  *
  * @returns la pagina de inicio
  */
-const PaginaInicio = ({}) => {
-  const dispacth = useAppDispatch();
-  const { valor: valorPagina } = useAppSelector((state) => state.page)
-  const { characters} = useAppSelector((state) => state.character)
+const PaginaInicio = () => {
+  const dispatch = useAppDispatch();
+  const { valor: valorPagina } = useAppSelector((state) => state.page);
+  const characters = useAppSelector((state) => state.character.filteredCharacters);
 
-  // este punto esta bien 
+
+  /* const handlePageChange = (newPage: number) => {
+     // Llama a las acciones de paginación
+     if (newPage > valorPagina) {
+       dispatch(NEXT_PAGE());
+     } else if (newPage < valorPagina) {
+       dispatch(PREVIOUS_PAGE());
+     }
+   }; */
+
   useEffect(() => {
-    dispacth(GET_CHARACTERS({numeroPagina: valorPagina,parametro:'page'}));
+    dispatch(GET_CHARACTERS({ numeroPagina: valorPagina, parametro: 'page' }));
   }, [valorPagina]);
 
   return (
@@ -28,10 +39,19 @@ const PaginaInicio = ({}) => {
         <h3>Catálogo de Personajes</h3>
         <button className="danger"> Limpiar Filtros</button>
       </div>
-      <Filtros   />
+     
+      {/*  <Paginacion currentPage={valorPagina} onPageChange={handlePageChange} />
+      <GrillaPersonajes
+  initialCharacters={characters}
+  currentPage={valorPagina}
+  setCurrentPage={handlePageChange}
+/>
+      <Paginacion currentPage={valorPagina} onPageChange={handlePageChange} /> */}
+
+      <Filtros />
       <Paginacion valorPagina={valorPagina} />
       <GrillaPersonajes initialCharacters={characters} />
-      <Paginacion valorPagina={valorPagina}/>
+      <Paginacion valorPagina={valorPagina} />
     </div>
   );
 };

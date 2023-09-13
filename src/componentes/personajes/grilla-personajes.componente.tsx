@@ -20,6 +20,8 @@ import {  IGrillaPersonajesProps} from './interfaceGrillaPersonaje';
 const GrillaPersonajes = ({ initialCharacters }: IGrillaPersonajesProps ) => {
     const { isLoading, isError, filteredCharacters } = useAppSelector(state => state.character);
     const [searchTerm, setSearchTerm] = useState("");
+/*     const [currentPage, setCurrentPage] = useState(1);
+    const charactersPerPage = 10; */
     const dispatch = useDispatch();
 
 
@@ -32,21 +34,31 @@ const GrillaPersonajes = ({ initialCharacters }: IGrillaPersonajesProps ) => {
         }
     }, [searchTerm, dispatch]);
 
-
-  const charactersToDisplay =  searchTerm.trim() ===" " 
+    
+    const charactersToDisplay =  searchTerm.trim() ==="" 
     ? filteredCharacters 
     : initialCharacters 
 
-/*     const charactersToDisplay = searchTerm === null || searchTerm.trim() === ' ' ? initialCharacters : filteredCharacters; */
-   
+  /* const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+ */
+/*   const charactersToDisplay = searchTerm.trim() === "" ? filteredCharacters : initialCharacters;
+  const indexOfLastCharacter = currentPage * charactersPerPage;
+  const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage;
+  const currentCharacters = charactersToDisplay.slice(indexOfFirstCharacter, indexOfLastCharacter); */
+
+
+
+
    return <div className="grilla-personajes">
 
         {isLoading ? <p> Cargando...</p> :
-            charactersToDisplay.map(character =>
+            charactersToDisplay.map(characters =>
                 <TarjetaPersonaje
-                    key={character.id}
-                    nombre={character.name}
-                    UrlImagen={character.image}
+                    key={characters.id}
+                    nombre={characters.name}
+                    UrlImagen={characters.image}
                     esFavorito={false}
                 />
             )}
